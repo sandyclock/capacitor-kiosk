@@ -48,19 +48,19 @@
             </activity>
         </edit-config> -->
 
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:name="jk.cordova.plugin.kiosk.KioskActivity" android:label="@string/title_activity_main" android:keepScreenOn="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             </activity>
-        </config-file>
+        </config-file> -->
 
         <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/activity_name']"> -->
-        <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/title_activity_main']">
+        <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/title_activity_main']">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
-                    <category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.HOME" />
                 </intent-filter>
-        </config-file>
+        </config-file> -->
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <!-- autorun after the app APK is updated -->
