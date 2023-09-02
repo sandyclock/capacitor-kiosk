@@ -1,6 +1,6 @@
 {
   "name": "capacitor-kiosk",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Capacitor plugin to create Capacitor application with kiosk mode",
   "cordova": {
     "id": "capacitor-kiosk",
