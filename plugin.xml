@@ -48,10 +48,10 @@
             </activity>
         </edit-config> -->
 
-        <config-file file="AndroidManifest.xml" parent="/manifest/application">
+        <!-- <config-file file="AndroidManifest.xml" parent="/manifest/application">
             <activity android:name="jk.cordova.plugin.kiosk.KioskActivity" android:label="@string/title_activity_main" android:keepScreenOn="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             </activity>
-        </config-file>
+        </config-file> -->
 
         <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/activity_name']"> -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/title_activity_main']">
