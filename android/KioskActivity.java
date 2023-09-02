@@ -83,7 +83,7 @@ public class KioskActivity extends BridgeActivity {
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
             super.onPause();
             ActivityManager activityManager = (ActivityManager) getApplicationContext()
                     .getSystemService(Context.ACTIVITY_SERVICE);
