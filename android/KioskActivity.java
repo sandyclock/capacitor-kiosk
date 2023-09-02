@@ -19,7 +19,10 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class KioskActivity extends CordovaActivity {
+import com.getcapacitor.BridgeActivity;
+
+
+public class KioskActivity extends BridgeActivity {
 
     public static volatile boolean running = false;
     public static volatile Set<Integer> allowedKeys = Collections.EMPTY_SET;
@@ -27,14 +30,14 @@ public class KioskActivity extends CordovaActivity {
     private StatusBarOverlay statusBarOverlay = null;
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         System.out.println("KioskActivity started");
         running = true;
     }
 
     @Override
-    protected void onStop() {
+    public void onStop() {
         super.onStop();
         System.out.println("KioskActivity stopped");
         running = false;
@@ -43,13 +46,13 @@ public class KioskActivity extends CordovaActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.init();
+        // super.init();
         
         if (running) {
             finish(); // prevent more instances of kiosk activity
         }
         
-        loadUrl(launchUrl);
+        // loadUrl(launchUrl);
         
         // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
