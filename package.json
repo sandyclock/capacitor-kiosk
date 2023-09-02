@@ -1,28 +1,27 @@
 {
-  "name": "cordova-plugin-kiosk",
+  "name": "capacitor-kiosk",
   "version": "1.0.0",
-  "description": "Cordova plugin to create Cordova application with kiosk mode",
+  "description": "Capacitor plugin to create Capacitor application with kiosk mode",
   "cordova": {
-    "id": "cordova-plugin-kiosk",
+    "id": "capacitor-kiosk",
     "platforms": [
       "android"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/honza889/cordova-plugin-kiosk.git"
+    "url": "https://github.com/sandyclock/capacitor-kiosk.git"
   },
   "keywords": [
-    "cordova",
+    "capacitor",
     "android",
     "kiosk",
-    "ecosystem:cordova",
-    "cordova-android"
+    "ecosystem:cordova"
   ],
   "author": "Jan Kalina",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/honza889/cordova-plugin-kiosk/issues"
+    "url": "https://github.com/sandyclock/capacitor-kiosk/issues"
   },
-  "homepage": "https://github.com/honza889/cordova-plugin-kiosk"
+  "homepage": "https://github.com/sandyclock/capacitor-kiosk"
 }
