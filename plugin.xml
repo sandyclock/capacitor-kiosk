@@ -43,10 +43,15 @@
         </config-file>
 
         <!-- <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:label='@string/activity_name']" mode="merge"> -->
-        <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:label='@string/title_activity_main']">
+        <!-- <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:label='@string/title_activity_main']">
             <activity android:name="jk.cordova.plugin.kiosk.KioskActivity" android:keepScreenOn="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             </activity>
-        </edit-config>
+        </edit-config> -->
+
+        <config-file file="AndroidManifest.xml" target="/manifest/application]">
+            <activity android:name="jk.cordova.plugin.kiosk.KioskActivity" android:label="@string/title_activity_main" android:keepScreenOn="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            </activity>
+        </config-file>
 
         <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/activity_name']"> -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/title_activity_main']">
