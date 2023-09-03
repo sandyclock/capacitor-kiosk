@@ -31,14 +31,20 @@ public class KioskPlugin extends CordovaPlugin {
 
     public static final String LEAVE_KIOSK = "leaveKiosk";
 
+    public static final String IS_IN_KIOSK_MODE = "isInKioskMode";
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         try {
             if (IS_IN_KIOSK.equals(action)) {
 
-                callbackContext.success(Boolean.toString(KioskActivity.running!=null));
+              callbackContext.success(Boolean.toString(KioskActivity.running != null));
+              return true;
+            }
+            else if (IS_IN_KIOSK_MODE.equals(action)) {
+                callbackContext.success(Boolean.toString(KioskActivity.running!=null && KioskActivity.kioskMode));
                 return true;
-                
+
             } else if (IS_SET_AS_LAUNCHER.equals(action)) {
                 
                 String myPackage = cordova.getActivity().getApplicationContext().getPackageName();
