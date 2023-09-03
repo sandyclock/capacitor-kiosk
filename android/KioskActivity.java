@@ -24,7 +24,9 @@ import com.getcapacitor.BridgeActivity;
 
 public class KioskActivity extends BridgeActivity {
 
-    public static volatile boolean running = false;
+    public static volatile KioskActivity running = null;
+
+    public static volatile  boolean kioskMode = true;
     public static volatile Set<Integer> allowedKeys = Collections.EMPTY_SET;
 
     private StatusBarOverlay statusBarOverlay = null;
@@ -33,22 +35,22 @@ public class KioskActivity extends BridgeActivity {
     public void onStart() {
         super.onStart();
         System.out.println("KioskActivity started");
-        running = true;
+        running = this;
     }
 
     @Override
     public void onStop() {
         super.onStop();
         System.out.println("KioskActivity stopped");
-        running = false;
+        running = null;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // super.init();
-        
-        if (running) {
+
+        if (running!=null) {
             finish(); // prevent more instances of kiosk activity
         }
         
@@ -114,9 +116,12 @@ public class KioskActivity extends BridgeActivity {
             sendBroadcast(closeDialog);
             */
 
-            ActivityManager am = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+
+            if (KioskActivity.kioskMode) {
+              ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
             am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
-            
+            }
+
             // sometime required to close opened notification area
             // Timer timer = new Timer();
             // timer.schedule(new TimerTask(){

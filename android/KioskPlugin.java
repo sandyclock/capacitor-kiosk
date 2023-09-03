@@ -26,13 +26,17 @@ public class KioskPlugin extends CordovaPlugin {
     public static final String IS_IN_KIOSK = "isInKiosk";
     public static final String IS_SET_AS_LAUNCHER = "isSetAsLauncher";
     public static final String SET_ALLOWED_KEYS = "setAllowedKeys";
-    
+
+    public static final String ENTER_KIOSK = "enterKiosk";
+
+    public static final String LEAVE_KIOSK = "leaveKiosk";
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         try {
             if (IS_IN_KIOSK.equals(action)) {
-                
-                callbackContext.success(Boolean.toString(KioskActivity.running));
+
+                callbackContext.success(Boolean.toString(KioskActivity.running!=null));
                 return true;
                 
             } else if (IS_SET_AS_LAUNCHER.equals(action)) {
@@ -40,9 +44,35 @@ public class KioskPlugin extends CordovaPlugin {
                 String myPackage = cordova.getActivity().getApplicationContext().getPackageName();
                 callbackContext.success(Boolean.toString(myPackage.equals(findLauncherPackageName())));
                 return true;
-                
-            } else if (EXIT_KIOSK.equals(action)) {
-                
+
+            }
+            else if (ENTER_KIOSK.equals(action)){
+              KioskActivity.kioskMode = true;
+              if (KioskActivity.running!=null) {
+                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+                // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
+                View decorView = KioskActivity.running.getWindow().getDecorView();
+                // Hide the status bar.
+                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+              }
+            }
+            else if (LEAVE_KIOSK.equals(action)){
+              KioskActivity.kioskMode = false;
+              if (KioskActivity.running!=null) {
+                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+                // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
+                View decorView = KioskActivity.running.getWindow().getDecorView();
+                // Hide the status bar.
+                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+              }
+
+            }
+            else if (EXIT_KIOSK.equals(action)) {
+
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
