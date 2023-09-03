@@ -64,6 +64,9 @@ public class KioskPlugin extends CordovaPlugin {
 //                // Hide the status bar.
 //                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
               }
+              callbackContext.success();
+              return true;
+
             }
             else if (LEAVE_KIOSK.equals(action)){
 //              KioskActivity.kioskMode = false;
@@ -77,6 +80,8 @@ public class KioskPlugin extends CordovaPlugin {
 //                // Hide the status bar.
 //                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
               }
+              callbackContext.success();
+              return true;
 
             }
             else if (EXIT_KIOSK.equals(action)) {

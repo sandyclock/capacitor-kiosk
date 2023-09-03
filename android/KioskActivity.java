@@ -34,6 +34,9 @@ public class KioskActivity extends BridgeActivity {
     public void enterKioskMode(){
       if (!kioskMode){
         kioskMode = true;
+
+        this.runOnUiThread(
+          ()-> {
         // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -59,12 +62,18 @@ public class KioskActivity extends BridgeActivity {
         if (_actionBar != null) {
           _actionBar.hide();
         }
+
+          }
+        );
       }
     }
 
   public void leaveKioskMode(){
     if (kioskMode){
       kioskMode = false;
+      this.runOnUiThread(
+        ()-> {
+
       // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
       getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
       getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -90,6 +99,8 @@ public class KioskActivity extends BridgeActivity {
       if (_actionBar != null) {
         _actionBar.show();
       }
+    }
+      );
     }
   }
 
