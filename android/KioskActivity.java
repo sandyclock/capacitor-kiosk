@@ -172,21 +172,40 @@ public class KioskActivity extends BridgeActivity {
     @Override
     public void onPause() {
             super.onPause();
-            ActivityManager activityManager = (ActivityManager) getApplicationContext()
-                    .getSystemService(Context.ACTIVITY_SERVICE);
-            activityManager.moveTaskToFront(getTaskId(), 0);
-    }     
-    
+            this._moveTaskToFront();
+//            if (kioskMode) {
+//              ActivityManager activityManager = (ActivityManager) getApplicationContext()
+//                .getSystemService(Context.ACTIVITY_SERVICE);
+//              activityManager.moveTaskToFront(getTaskId(), 0);
+//            }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         System.out.println("onKeyDown event: keyCode = " + event.getKeyCode());
         return ! allowedKeys.contains(event.getKeyCode()); // prevent event from being propagated if not allowed
     }
-    
+
     @Override
     public void finish() {
         System.out.println("Never finish...");
         // super.finish();
+    }
+
+    private void _moveTaskToFront() {
+      System.out.println("**********move task to front *********");
+      if (kioskMode) {
+        System.out.println("move:check:1");
+
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+//              am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
+        System.out.println("move:check:2");
+
+        am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
+        System.out.println("move:check:3");
+
+      }
+      System.out.println("******* end moving task *********");
     }
 
     // http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
@@ -195,17 +214,18 @@ public class KioskActivity extends BridgeActivity {
         super.onWindowFocusChanged(hasFocus);
         if(!hasFocus) {
             System.out.println("Focus lost - closing system dialogs");
-            
+
             /*
             Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
             sendBroadcast(closeDialog);
             */
-
-
-            if (KioskActivity.kioskMode) {
-              ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-            am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
-            }
+            this._moveTaskToFront();
+//            if (kioskMode) {
+//              ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+////              am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
+//              am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_NO_USER_ACTION);
+//
+//            }
 
             // sometime required to close opened notification area
             // Timer timer = new Timer();
