@@ -8,7 +8,19 @@ var KioskPlugin = {
             alert("KioskPlugin.exitKiosk failed: " + error);
         }, "KioskPlugin", "exitKiosk", []);
     },
-    
+
+    enterKiosk: function () {
+        exec(function () {}, function (error) {
+            alert("KioskPlugin.enterKiosk failed: " + error);
+        }, "KioskPlugin", "enterKiosk", []);
+    },
+
+    leaveKiosk: function () {
+        exec(function () {}, function (error) {
+            alert("KioskPlugin.leaveKiosk failed: " + error);
+        }, "KioskPlugin", "leaveKiosk", []);
+    },
+
     isInKiosk: function (callback) {
         if(/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
             callback(false); // ios not supported - cannot be in kiosk
