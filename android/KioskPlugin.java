@@ -53,27 +53,29 @@ public class KioskPlugin extends CordovaPlugin {
 
             }
             else if (ENTER_KIOSK.equals(action)){
-              KioskActivity.kioskMode = true;
+//              KioskActivity.kioskMode = true;
               if (KioskActivity.running!=null) {
-                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-                // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
-                View decorView = KioskActivity.running.getWindow().getDecorView();
-                // Hide the status bar.
-                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                  KioskActivity.running.enterKioskMode();
+//                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+//                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//
+//                // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
+//                View decorView = KioskActivity.running.getWindow().getDecorView();
+//                // Hide the status bar.
+//                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
               }
             }
             else if (LEAVE_KIOSK.equals(action)){
-              KioskActivity.kioskMode = false;
+//              KioskActivity.kioskMode = false;
               if (KioskActivity.running!=null) {
-                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-                // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
-                View decorView = KioskActivity.running.getWindow().getDecorView();
-                // Hide the status bar.
-                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+                  KioskActivity.running.leaveKioskMode();
+//                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+////                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//
+//                // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
+//                View decorView = KioskActivity.running.getWindow().getDecorView();
+//                // Hide the status bar.
+//                decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
               }
 
             }

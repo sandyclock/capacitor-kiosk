@@ -26,10 +26,72 @@ public class KioskActivity extends BridgeActivity {
 
     public static volatile KioskActivity running = null;
 
-    public static volatile  boolean kioskMode = true;
+    public static volatile  boolean kioskMode = false;
     public static volatile Set<Integer> allowedKeys = Collections.EMPTY_SET;
 
     private StatusBarOverlay statusBarOverlay = null;
+
+    public void enterKioskMode(){
+      if (!kioskMode){
+        kioskMode = true;
+        // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        // decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+        // Remember that you should never show the action bar if the
+        // status bar is hidden, so hide that too if necessary.
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) actionBar.hide();
+
+        androidx.appcompat.app.ActionBar _actionBar = getSupportActionBar();
+
+
+        System.out.println("getActionBar:2:**********");
+
+        System.out.println(String.valueOf(_actionBar));
+
+        if (_actionBar != null) {
+          _actionBar.hide();
+        }
+      }
+    }
+
+  public void leaveKioskMode(){
+    if (kioskMode){
+      kioskMode = false;
+      // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
+      getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+      getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+      // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
+      View decorView = getWindow().getDecorView();
+      // Hide the status bar.
+      decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+
+      // decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+      // Remember that you should never show the action bar if the
+      // status bar is hidden, so hide that too if necessary.
+      ActionBar actionBar = getActionBar();
+      if (actionBar != null) actionBar.show();
+
+      androidx.appcompat.app.ActionBar _actionBar = getSupportActionBar();
+
+
+      System.out.println("getActionBar:2:**********");
+
+      System.out.println(String.valueOf(_actionBar));
+
+      if (_actionBar != null) {
+        _actionBar.show();
+      }
+    }
+  }
 
     @Override
     public void onStart() {
@@ -55,22 +117,34 @@ public class KioskActivity extends BridgeActivity {
         }
         
         // loadUrl(launchUrl);
-        
-        // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
-        // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
-        View decorView = getWindow().getDecorView();
-        // Hide the status bar.
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        // decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-        // Remember that you should never show the action bar if the
-        // status bar is hidden, so hide that too if necessary.
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) actionBar.hide();
-        
+//        // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
+//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//
+//        // https://github.com/hkalina/cordova-plugin-kiosk/issues/14
+//        View decorView = getWindow().getDecorView();
+//        // Hide the status bar.
+//        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN|View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+//
+//        // decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+//        // Remember that you should never show the action bar if the
+//        // status bar is hidden, so hide that too if necessary.
+//        ActionBar actionBar = getActionBar();
+//        if (actionBar != null) actionBar.hide();
+//
+//      androidx.appcompat.app.ActionBar _actionBar = getSupportActionBar();
+//
+//
+//      System.out.println("getActionBar:2:**********");
+//
+//      System.out.println(String.valueOf(_actionBar));
+//
+//      if (_actionBar != null) {
+//        _actionBar.hide();
+//      }
+
+
         // add overlay to prevent statusbar access by swiping
         // statusBarOverlay = StatusBarOverlay.createOrObtainPermission(this);
     }
