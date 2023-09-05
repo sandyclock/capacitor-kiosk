@@ -74,6 +74,10 @@ public class KioskActivity extends BridgeActivity {
 
     this.runOnUiThread(
       () -> {
+        if (kioskMode){
+          kioskMode = false;
+        }
+
         Context context = this.getApplicationContext();
         PackageManager packageManager = context.getPackageManager();
         ComponentName componentName = new ComponentName(context, FakeLauncherActivity.class);
@@ -84,7 +88,8 @@ public class KioskActivity extends BridgeActivity {
         selector.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(selector);
 
-        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP);
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.SYNCHRONOUS);
+
       });
   }
 
