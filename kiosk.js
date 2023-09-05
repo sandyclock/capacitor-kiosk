@@ -29,6 +29,19 @@ var KioskPlugin = {
         }, "KioskPlugin", "enterKiosk", []);
     },
 
+    selectLauncher: function (callback, hasError) {
+        exec(function () {
+            if (callback){
+                callback();
+            }
+        }, function (error) {
+            alert("KioskPlugin.selectLauncher failed: " + error);
+            if (hasError){
+                hasError(error)
+            }
+        }, "KioskPlugin", "selectLauncher", []);
+    },
+
     leaveKiosk: function (callback, hasError) {
         exec(function () {
             if (callback){
