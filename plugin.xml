@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
-        id="cordova-plugin-kiosk" version="0.2">
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-plugin-kiosk" version="0.2">
 
     <name>Cordova Kiosk Mode</name>
     <author>Jan Kalina</author>
@@ -30,10 +31,11 @@
     </js-module>
 
     <platform name="android">
-        <framework src="kiosk.gradle" custom="true" type="gradleReference"/>
+        <framework src="kiosk.gradle" custom="true" type="gradleReference" />
         <source-file src="android/KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
-        <source-file src="android/MyPackageReplacedEventReceiver.java" target-dir="src/jk/cordova/plugin/kiosk" />
+        <source-file src="android/MyPackageReplacedEventReceiver.java"
+            target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/StatusBarOverlay.java" target-dir="src/jk/cordova/plugin/kiosk" />
 
 
@@ -43,19 +45,27 @@
             </feature>
         </config-file>
 
-        <!-- <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:label='@string/activity_name']" mode="merge"> -->
-        <!-- <edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:label='@string/title_activity_main']">
-            <activity android:name="jk.cordova.plugin.kiosk.KioskActivity" android:keepScreenOn="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        <!-- <edit-config file="AndroidManifest.xml"
+        target="/manifest/application/activity[@android:label='@string/activity_name']"
+        mode="merge"> -->
+        <!-- <edit-config file="AndroidManifest.xml"
+        target="/manifest/application/activity[@android:label='@string/title_activity_main']">
+            <activity android:name="jk.cordova.plugin.kiosk.KioskActivity" android:keepScreenOn="true"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             </activity>
         </edit-config> -->
 
         <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="jk.cordova.plugin.kiosk.KioskActivity" android:label="@string/title_activity_main" android:keepScreenOn="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <activity android:name="jk.cordova.plugin.kiosk.KioskActivity"
+        android:label="@string/title_activity_main" android:keepScreenOn="true"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             </activity>
         </config-file> -->
 
-        <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/activity_name']"> -->
-        <!-- <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/title_activity_main']">
+        <!-- <config-file target="AndroidManifest.xml"
+        parent="/manifest/application/activity[@android:label='@string/activity_name']"> -->
+        <!-- <config-file target="AndroidManifest.xml"
+        parent="/manifest/application/activity[@android:label='@string/title_activity_main']">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.DEFAULT" />
@@ -65,16 +75,26 @@
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <!-- autorun after the app APK is updated -->
-            <receiver android:name="jk.cordova.plugin.kiosk.MyPackageReplacedEventReceiver" android:exported="true">
+            <receiver android:name="jk.cordova.plugin.kiosk.MyPackageReplacedEventReceiver"
+                android:exported="true">
                 <intent-filter>
                     <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
                 </intent-filter>
             </receiver>
+            <activity
+                android:name="jk.cordova.plugin.kiosk.FakeLauncherActivity"
+                android:enabled="false">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.HOME" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest">
-                <uses-permission android:name="android.permission.REORDER_TASKS"/>
-                <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+            <uses-permission android:name="android.permission.REORDER_TASKS" />
+            <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
         </config-file>
 
 
