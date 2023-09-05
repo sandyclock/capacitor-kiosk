@@ -32,6 +32,7 @@
 
     <platform name="android">
         <framework src="kiosk.gradle" custom="true" type="gradleReference" />
+        <source-file src="android/FakeLauncherActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/KioskActivity.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/KioskPlugin.java" target-dir="src/jk/cordova/plugin/kiosk" />
         <source-file src="android/MyPackageReplacedEventReceiver.java"
