@@ -3,8 +3,10 @@ package jk.cordova.plugin.kiosk;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import org.apache.cordova.*;
 import android.widget.*;
@@ -67,6 +69,24 @@ public class KioskActivity extends BridgeActivity {
         );
       }
     }
+
+  public void selectLauncher() {
+
+    this.runOnUiThread(
+      () -> {
+        Context context = this.getApplicationContext();
+        PackageManager packageManager = context.getPackageManager();
+        ComponentName componentName = new ComponentName(context, FakeLauncherActivity.class);
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+
+        Intent selector = new Intent(Intent.ACTION_MAIN);
+        selector.addCategory(Intent.CATEGORY_HOME);
+        selector.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(selector);
+
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.DONT_KILL_APP);
+      });
+  }
 
   public void leaveKioskMode(){
     if (kioskMode){
