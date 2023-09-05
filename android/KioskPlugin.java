@@ -28,8 +28,8 @@ public class KioskPlugin extends CordovaPlugin {
     public static final String SET_ALLOWED_KEYS = "setAllowedKeys";
 
     public static final String ENTER_KIOSK = "enterKiosk";
-
     public static final String LEAVE_KIOSK = "leaveKiosk";
+    public static final String SELECT_LAUNCHER = "selectLauncher";
 
     public static final String IS_IN_KIOSK_MODE = "isInKioskMode";
 
@@ -39,6 +39,13 @@ public class KioskPlugin extends CordovaPlugin {
             if (IS_IN_KIOSK.equals(action)) {
 
               callbackContext.success(Boolean.toString(KioskActivity.running != null));
+              return true;
+            }
+            else if (SELECT_LAUNCHER.equals(action)){
+              if (KioskActivity.running!=null){
+                KioskActivity.running.selectLauncher();
+              }
+              callbackContext.success();
               return true;
             }
             else if (IS_IN_KIOSK_MODE.equals(action)) {
