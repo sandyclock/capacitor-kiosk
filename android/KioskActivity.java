@@ -70,10 +70,25 @@ public class KioskActivity extends BridgeActivity {
       }
     }
 
+  /*
+   * This is based on the link below,
+   *   https://stackoverflow.com/questions/27991656/how-to-set-default-app-launcher-programmatically
+   * 
+   * The basic idea is to create a fake component and declare it as disabled, and then enable it to force the system to show the launcher selector screen even if the user already made a previous selection,
+   * because the default launch list has been changed. 
+   * 
+   * We made two important tweets as documented in the code below. 
+   * 
+   * @tanli 9/5/23
+   */
   public void selectLauncher() {
 
     this.runOnUiThread(
       () -> {
+        /*
+         * We disable kioskMode because otherwise, when the system launcher chooser appears, the current app will be in sleep mode, and if the kiosk mode is on,
+         * it will pull back the current app, and hence dismiss the chooser without letting the user to choose.
+         */
         if (kioskMode){
           kioskMode = false;
         }
@@ -88,6 +103,10 @@ public class KioskActivity extends BridgeActivity {
         selector.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(selector);
 
+        /*
+         * We ask the system to remove the current instanceof the app after selection, so it will start a new thread, and if the user needs to re-select launcher,
+         * the launcher chooser will still appear (otherwise, it will hide because the user already made a selection for the current thread)
+         */
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DEFAULT, PackageManager.SYNCHRONOUS);
 
       });

@@ -101,7 +101,23 @@ var KioskPlugin = {
 
         }, "KioskPlugin", "isSetAsLauncher", []);
     },
-    
+
+    isDeviceSecure: function (callback, hasError) {
+        if(/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
+            callback(false); // ios not supported - cannot be in kiosk
+            return;
+        }
+        exec(function (out) {
+            callback(out == "true");
+        }, function (error) {
+            alert("KioskPlugin.isDeviceSecure failed: " + error);
+            if (hasError){
+                hasError(error)
+            }
+
+        }, "KioskPlugin", "isDeviceSecure", []);
+    },
+
     setAllowedKeys: function (keyCodes, callback, hasError) {
         exec(function () {
             if (callback){

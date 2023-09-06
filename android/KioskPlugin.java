@@ -1,6 +1,8 @@
 package jk.cordova.plugin.kiosk;
 
 import android.app.Activity;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.KeyEvent;
 import android.view.ViewGroup.LayoutParams;
+
+import java.lang.reflect.Method;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.json.JSONArray;
@@ -33,6 +37,26 @@ public class KioskPlugin extends CordovaPlugin {
 
     public static final String IS_IN_KIOSK_MODE = "isInKioskMode";
 
+  public static final String IS_DEVICE_SECURE = "isDeviceSecure";
+
+  /*
+   * Snippet adopted from cordova secure storage plugin
+   * https://github.com/mibrito707/cordova-plugin-secure-storage-echo/blob/master/src/android/SecureStorage.java
+   *
+   * @tanli 9/6/23
+   */
+  private boolean _isDeviceSecure(Context context) {
+    KeyguardManager keyguardManager = (KeyguardManager) (context.getSystemService(Context.KEYGUARD_SERVICE));
+    try {
+      Method isSecure = null;
+      isSecure = keyguardManager.getClass().getMethod("isDeviceSecure");
+      return ((Boolean) isSecure.invoke(keyguardManager)).booleanValue();
+    } catch (Exception e) {
+      return keyguardManager.isKeyguardSecure();
+    }
+  }
+
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         try {
@@ -52,16 +76,25 @@ public class KioskPlugin extends CordovaPlugin {
                 callbackContext.success(Boolean.toString(KioskActivity.running!=null && KioskActivity.kioskMode));
                 return true;
 
-            } else if (IS_SET_AS_LAUNCHER.equals(action)) {
-                
+            }
+            else if (IS_SET_AS_LAUNCHER.equals(action)) {
+
                 String myPackage = cordova.getActivity().getApplicationContext().getPackageName();
                 callbackContext.success(Boolean.toString(myPackage.equals(findLauncherPackageName())));
                 return true;
 
             }
-            else if (ENTER_KIOSK.equals(action)){
+            else if (IS_DEVICE_SECURE.equals(action)) {
+
+              Context context = cordova.getActivity().getApplicationContext();
+
+              callbackContext.success(Boolean.toString(this._isDeviceSecure(context)));
+              return true;
+
+            }
+            else if (ENTER_KIOSK.equals(action)) {
 //              KioskActivity.kioskMode = true;
-              if (KioskActivity.running!=null) {
+              if (KioskActivity.running != null) {
                   KioskActivity.running.enterKioskMode();
 //                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 //                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
