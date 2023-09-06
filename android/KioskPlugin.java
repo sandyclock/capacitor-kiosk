@@ -39,6 +39,8 @@ public class KioskPlugin extends CordovaPlugin {
 
   public static final String IS_DEVICE_SECURE = "isDeviceSecure";
 
+  public static final String OPEN_LOCK_SCREEN_SETTING = "openLockScreenSetting";
+
   /*
    * Snippet adopted from cordova secure storage plugin
    * https://github.com/mibrito707/cordova-plugin-secure-storage-echo/blob/master/src/android/SecureStorage.java
@@ -92,8 +94,15 @@ public class KioskPlugin extends CordovaPlugin {
               return true;
 
             }
+            else if (OPEN_LOCK_SCREEN_SETTING.equals(action)) {
+              if (KioskActivity.running != null) {
+                KioskActivity.running.openLockScreenSetting();
+              }
+              callbackContext.success();
+              return true;
+
+            }
             else if (ENTER_KIOSK.equals(action)) {
-//              KioskActivity.kioskMode = true;
               if (KioskActivity.running != null) {
                   KioskActivity.running.enterKioskMode();
 //                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
@@ -109,7 +118,6 @@ public class KioskPlugin extends CordovaPlugin {
 
             }
             else if (LEAVE_KIOSK.equals(action)){
-//              KioskActivity.kioskMode = false;
               if (KioskActivity.running!=null) {
                   KioskActivity.running.leaveKioskMode();
 //                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);

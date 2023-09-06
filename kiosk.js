@@ -56,6 +56,20 @@ var KioskPlugin = {
         }, "KioskPlugin", "leaveKiosk", []);
     },
 
+    openLockScreenSetting: function (callback, hasError) {
+        exec(function () {
+            if (callback){
+                callback();
+            }
+
+        }, function (error) {
+            alert("KioskPlugin.openLockScreenSetting failed: " + error);
+            if (hasError){
+                hasError(error)
+            }
+        }, "KioskPlugin", "openLockScreenSetting", []);
+    },
+
     isInKiosk: function (callback, hasError) {
         if(/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
             callback(false); // ios not supported - cannot be in kiosk

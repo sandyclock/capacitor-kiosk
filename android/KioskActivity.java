@@ -3,6 +3,7 @@ package jk.cordova.plugin.kiosk;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -34,11 +35,13 @@ public class KioskActivity extends BridgeActivity {
     private StatusBarOverlay statusBarOverlay = null;
 
     public void enterKioskMode(){
-      if (!kioskMode){
-        kioskMode = true;
 
         this.runOnUiThread(
           ()-> {
+            if (!kioskMode) {
+              kioskMode = true;
+            }
+
         // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -67,7 +70,24 @@ public class KioskActivity extends BridgeActivity {
 
           }
         );
+
+    }
+
+  /*
+   * https://stackoverflow.com/questions/53778920/android-open-lock-screen-settings-programmatically
+   */
+  public void openLockScreenSetting(){
+      this.runOnUiThread(
+        ()-> {
+          if (!kioskMode) {
+            kioskMode = true;
+          }
+//          Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+          Intent intent = new Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD);
+          startActivity(intent);
       }
+      );
+
     }
 
   /*
@@ -113,10 +133,11 @@ public class KioskActivity extends BridgeActivity {
   }
 
   public void leaveKioskMode(){
-    if (kioskMode){
-      kioskMode = false;
       this.runOnUiThread(
         ()-> {
+          if (kioskMode) {
+            kioskMode = false;
+          }
 
       // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
       getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
@@ -145,7 +166,7 @@ public class KioskActivity extends BridgeActivity {
       }
     }
       );
-    }
+
   }
 
     @Override
