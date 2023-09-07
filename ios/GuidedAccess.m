@@ -1,5 +1,5 @@
 #import <Cordova/CDV.h>
-#import "WPGuidedAccess.h"
+#import "GuidedAccess.h"
 
 @implementation GuidedAccessMode
 
