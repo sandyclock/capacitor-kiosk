@@ -1,6 +1,6 @@
 #import <Cordova/CDV.h>
 
-@interface GuidedAccessMode : CDVPlugin
+@interface KioskPlugin: CDVPlugin
 
 - (void)isEnabled:(CDVInvokedUrlCommand*)command;
 
