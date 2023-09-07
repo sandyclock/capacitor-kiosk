@@ -2,6 +2,6 @@
 
 @interface KioskPlugin: CDVPlugin
 
-- (void)isEnabled:(CDVInvokedUrlCommand*)command;
+- (void)isGuidedAccessEnabled:(CDVInvokedUrlCommand*)command;
 
 @end

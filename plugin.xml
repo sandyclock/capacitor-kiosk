@@ -31,8 +31,8 @@
     </js-module>
     <platform name="ios">
         <config-file parent="/*" target="config.xml">
-            <feature name="GuidedAccessMode">
-                <param name="ios-package" value="GuidedAccessMode"/>
+            <feature name="KioskPlugin">
+                <param name="ios-package" value="GuidedAccess"/>
             </feature>
         </config-file>
         <header-file src="ios/GuidedAccess.h"/>
