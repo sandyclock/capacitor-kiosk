@@ -146,6 +146,8 @@ var KioskPlugin = {
     },
 
     isGuidedAccessEnabled: function (callback, hasError) {
+        console.log("user:agent:");
+        console.log(navigator.userAgent);
         if(!(/ios|iphone|ipod|ipad/i.test(navigator.userAgent))) {
             callback(false); // android not supported - Guided access feature is supported on iOS.
             return;
