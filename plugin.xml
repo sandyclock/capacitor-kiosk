@@ -32,7 +32,7 @@
     <platform name="ios">
         <config-file parent="/*" target="config.xml">
             <feature name="KioskPlugin">
-                <param name="ios-package" value="GuidedAccess"/>
+                <param name="ios-package" value="KioskPlugin"/>
             </feature>
         </config-file>
         <header-file src="ios/GuidedAccess.h"/>
