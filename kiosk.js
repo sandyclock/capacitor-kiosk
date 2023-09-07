@@ -156,8 +156,12 @@ var KioskPlugin = {
         console.log("isGuidedAccessEnabled:check:2:");
 
         exec(function (out) {
+            console.log("result:success:");
+            console.log(out);
             callback(out);
         }, function (error) {
+            console.log("result:failed:");
+            console.log(error);
             alert("KioskPlugin.isGuidedAccessEnabled failed: " + error);
             if (hasError){
                 hasError(error)
