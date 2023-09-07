@@ -150,6 +150,9 @@ var KioskPlugin = {
             callback(false); // android not supported - Guided access feature is supported on iOS.
             return;
         }
+
+        console.log("isGuidedAccessEnabled:check:2:");
+
         exec(function (out) {
             callback(out);
         }, function (error) {
