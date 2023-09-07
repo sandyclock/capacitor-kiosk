@@ -35,8 +35,8 @@
                 <param name="ios-package" value="GuidedAccessMode"/>
             </feature>
         </config-file>
-        <header-file src="src/ios/GuidedAccess.h"/>
-        <source-file src="src/ios/GuidedAccess.m"/>
+        <header-file src="ios/GuidedAccess.h"/>
+        <source-file src="ios/GuidedAccess.m"/>
     </platform>
 
     <platform name="android">
