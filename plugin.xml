@@ -29,6 +29,15 @@
     <js-module src="kiosk.js" name="kioskPlugin">
         <clobbers target="window.KioskPlugin" />
     </js-module>
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="GuidedAccessMode">
+                <param name="ios-package" value="GuidedAccessMode"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/GuidedAccess.h"/>
+        <source-file src="src/ios/GuidedAccess.m"/>
+    </platform>
 
     <platform name="android">
         <framework src="kiosk.gradle" custom="true" type="gradleReference" />

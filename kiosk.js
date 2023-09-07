@@ -143,7 +143,23 @@ var KioskPlugin = {
                 hasError(error)
             }
         }, "KioskPlugin", "setAllowedKeys", keyCodes);
-    }
+    },
+
+    isGuidedAccessEnabled: function (callback, hasError) {
+        if(!(/ios|iphone|ipod|ipad/i.test(navigator.userAgent))) {
+            callback(false); // android not supported - Guided access feature is supported on iOS.
+            return;
+        }
+        exec(function (out) {
+            callback(out);
+        }, function (error) {
+            alert("KioskPlugin.isGuidedAccessEnabled failed: " + error);
+            if (hasError){
+                hasError(error)
+            }
+        }, "KioskPlugin", "isGuidedAccessEnabled", []);
+    },
+
     
 }
 

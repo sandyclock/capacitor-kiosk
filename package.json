@@ -5,7 +5,8 @@
   "cordova": {
     "id": "capacitor-kiosk",
     "platforms": [
-      "android"
+      "android",
+      "ios"
     ]
   },
   "repository": {
@@ -16,9 +17,10 @@
     "capacitor",
     "android",
     "kiosk",
+    "guided-access",
     "ecosystem:cordova"
   ],
-  "author": "Jan Kalina",
+  "author": "Jan Kalina (original author)",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/sandyclock/capacitor-kiosk/issues"
