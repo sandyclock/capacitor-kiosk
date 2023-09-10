@@ -163,7 +163,7 @@ var KioskPlugin = {
     },
 
     isDevicePasscodeSet: function (callback, hasError) {
-        console.log("isDevicePasscodeSet:check:1:");
+        // console.log("isDevicePasscodeSet:check:1:");
 
         exec(function (out) {
             // console.log("result:success:");
