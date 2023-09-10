@@ -146,13 +146,6 @@ var KioskPlugin = {
     },
 
     isGuidedAccessEnabled: function (callback, hasError) {
-        // console.log("user:agent:");
-        // console.log(navigator.userAgent);
-        // if(!(/ios|iphone|ipod|ipad/i.test(navigator.userAgent))) {
-        //     callback(false); // android not supported - Guided access feature is supported on iOS.
-        //     return;
-        // }
-
         console.log("isGuidedAccessEnabled:check:2:");
 
         exec(function (out) {
@@ -168,6 +161,23 @@ var KioskPlugin = {
             }
         }, "KioskPlugin", "isGuidedAccessEnabled", []);
     },
+
+    isDevicePasscodeSet: function (callback, hasError) {
+        console.log("isDevicePasscodeSet:check:1:");
+
+        exec(function (out) {
+            // console.log("result:success:");
+            // console.log(out);
+            callback(out);
+        }, function (error) {
+            // console.log("result:failed:");
+            // console.log(error);
+            alert("KioskPlugin.isDevicePasscodeSet failed: " + error);
+            if (hasError){
+                hasError(error)
+            }
+        }, "KioskPlugin", "isDevicePasscodeSet", []);
+    }
 
     
 }

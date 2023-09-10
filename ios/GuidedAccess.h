@@ -4,4 +4,7 @@
 
 - (void)isGuidedAccessEnabled:(CDVInvokedUrlCommand*)command;
 
+- (void)isDevicePasscodeSet:(CDVInvokedUrlCommand*)command;
+
+
 @end
