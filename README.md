@@ -12,28 +12,35 @@ Escape from the app is possible only using javascript call `KioskPlugin.exitKios
 or by uninstalling the app using `adb`. (Keeping USB debug allowed necessary.)
 If the application starts as usual (not as a launcher), no restrictions are applied.
 
-* Official plugin website: https://github.com/hkalina/cordova-plugin-kiosk
+* Original plugin website: https://github.com/hkalina/cordova-plugin-kiosk
+* this plugin website: https://github.com/sandyclock/capacitor-kiosk
 * Example app: https://github.com/hkalina/cordova-kiosk-demo
 
 This plugin is for Android platform only. For kiosk on iOS platform check its Guided Access feature.
+
+This version extends the original version with new features, and also add support for capacitor.
+
+1. Add kiosk mode for android. In the kiosk mode it will hide the title bar and task bar. When combined with launch mode, it works similar to single apple mode;
+
+2. Various feature detection functions are added to detect if the desired configuration is set (for example, if the app is set as a launcher);
+
+3. Add functions to open various Android settings to help users set up kiosk mode related features.
+
+IMPORTANT NOTE
+--------------
+Support for the cordova is via cordova/capacitor migration. It, however, does not use native capacitor support. The end function of this cordova/capacitor is similar to a pure capacitor implementation.
 
 About
 -----
 
 By adding this Cordova plugin the Cordova app becomes a homescreen (also known as a launcher) of Android device and should block any attempt of user to leave it.
 
-To add plugin into existing Cordova / Phonegap application use:
+To add plugin into existing capacitor application use:
 
-    cordova plugin add https://github.com/hkalina/cordova-plugin-kiosk.git
+    npm install capacitor-kiosk
 
-To add specific version of this plugin (like `v2.0`) use:
 
-    cordova plugin add https://github.com/hkalina/cordova-plugin-kiosk.git#v2.0
 
-Android platform files (like `AndroidManifest.xml`) should be updated immediately. If you will modify plugin code, you will need to re-add android platform to plugin modifications take effect:
-
-    cordova platform rm android
-    cordova platform add android
 
 To has it working, user have to **set this application as launcher** (see below) and start it by pressing Home button or by restarting the device.
 
