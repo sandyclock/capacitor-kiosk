@@ -39,7 +39,34 @@ To add plugin into existing capacitor application use:
 
     npm install capacitor-kiosk
 
+Add the following to your app's manifest
 
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.stripe.example.app">
+      <activity
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
+        android:name="jk.cordova.plugin.kiosk.KioskActivity"
+        android:keepScreenOn="true"
+        android:theme="@style/AppTheme.NoActionBar"
+        android:label="@string/title_activity_main"
+            android:launchMode="singleTask"
+            android:exported="true">
+        <intent-filter>
+          <action android:name="android.intent.action.MAIN" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.HOME" />
+        </intent-filter>
+
+        <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+      </activity>
+
+</manifest>
 
 
 To has it working, user have to **set this application as launcher** (see below) and start it by pressing Home button or by restarting the device.
