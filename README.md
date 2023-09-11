@@ -41,6 +41,7 @@ To add plugin into existing capacitor application use:
 
 Add the following to your app's manifest
 
+```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.stripe.example.app">
@@ -66,6 +67,7 @@ Add the following to your app's manifest
       </activity>
 
 </manifest>
+```
 
 
 To has it working, user have to **set this application as launcher** (see below) and start it by pressing Home button or by restarting the device.
