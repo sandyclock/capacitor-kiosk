@@ -60,8 +60,8 @@ Add the following to your app's manifest
         </intent-filter>
 
         <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+          <action android:name="android.intent.action.MAIN" />
+          <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
 
       </activity>
