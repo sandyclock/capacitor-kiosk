@@ -1,5 +1,6 @@
 #import <Cordova/CDV.h>
 #import "GuidedAccess.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @implementation KioskPlugin
 
