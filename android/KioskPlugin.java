@@ -14,6 +14,8 @@ import android.view.WindowManager;
 import android.view.KeyEvent;
 import android.view.ViewGroup.LayoutParams;
 
+import com.getcapacitor.Logger;
+
 import java.lang.reflect.Method;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -103,8 +105,23 @@ public class KioskPlugin extends CordovaPlugin {
 
             }
             else if (ENTER_KIOSK.equals(action)) {
+              Logger.info("***************** arg passed in:");
+              Logger.info(String.valueOf(args));
+
+              Logger.info("***************** arg passed in:");
+              Logger.info(String.valueOf(args));
+              Boolean flagOnly=null;
+              if (args!=null && args.length()>0){
+                Logger.info("first arg extracted is:");
+                Logger.info(String.valueOf(args.getBoolean(0)));
+                flagOnly = args.getBoolean(0);
+              }
+
+
+
               if (KioskActivity.running != null) {
-                  KioskActivity.running.enterKioskMode();
+
+                  KioskActivity.running.enterKioskMode(flagOnly);
 //                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 //                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //
@@ -118,8 +135,19 @@ public class KioskPlugin extends CordovaPlugin {
 
             }
             else if (LEAVE_KIOSK.equals(action)){
+
+              Logger.info("***************** arg passed in:");
+              Logger.info(String.valueOf(args));
+              Boolean flagOnly=null;
+              if (args!=null && args.length()>0){
+                Logger.info("first arg extracted is:");
+                Logger.info(String.valueOf(args.getBoolean(0)));
+                flagOnly = args.getBoolean(0);
+              }
+
               if (KioskActivity.running!=null) {
-                  KioskActivity.running.leaveKioskMode();
+
+                  KioskActivity.running.leaveKioskMode(flagOnly);
 //                KioskActivity.running.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 ////                KioskActivity.running.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //

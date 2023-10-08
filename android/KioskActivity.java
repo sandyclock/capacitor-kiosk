@@ -34,12 +34,16 @@ public class KioskActivity extends BridgeActivity {
 
     private StatusBarOverlay statusBarOverlay = null;
 
-    public void enterKioskMode(){
+    public void enterKioskMode(Boolean flagOnly){
 
         this.runOnUiThread(
           ()-> {
             if (!kioskMode) {
               kioskMode = true;
+            }
+
+            if (Boolean.TRUE.equals(flagOnly)){
+              return;
             }
 
         // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
@@ -132,11 +136,16 @@ public class KioskActivity extends BridgeActivity {
       });
   }
 
-  public void leaveKioskMode(){
+  public void leaveKioskMode(Boolean flagOnly){
       this.runOnUiThread(
         ()-> {
           if (kioskMode) {
             kioskMode = false;
+          }
+
+          if (Boolean.TRUE.equals(flagOnly)){
+
+            return;
           }
 
       // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java

@@ -16,7 +16,7 @@ var KioskPlugin = {
         }, "KioskPlugin", "exitKiosk", []);
     },
 
-    enterKiosk: function (callback, hasError) {
+    enterKiosk: function (flagOnly, callback, hasError) {
         exec(function () {
             if (callback){
                 callback();
@@ -26,7 +26,7 @@ var KioskPlugin = {
             if (hasError){
                 hasError(error)
             }
-        }, "KioskPlugin", "enterKiosk", []);
+        }, "KioskPlugin", "enterKiosk", flagOnly?[flagOnly]:[]);
     },
 
     selectLauncher: function (callback, hasError) {
@@ -42,7 +42,7 @@ var KioskPlugin = {
         }, "KioskPlugin", "selectLauncher", []);
     },
 
-    leaveKiosk: function (callback, hasError) {
+    leaveKiosk: function (flagOnly, callback, hasError) {
         exec(function () {
             if (callback){
                 callback();
@@ -53,7 +53,7 @@ var KioskPlugin = {
             if (hasError){
                 hasError(error)
             }
-        }, "KioskPlugin", "leaveKiosk", []);
+        }, "KioskPlugin", "leaveKiosk", flagOnly?[flagOnly]:[]);
     },
 
     openLockScreenSetting: function (callback, hasError) {
