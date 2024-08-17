@@ -1,9 +1,11 @@
 package jk.cordova.plugin.kiosk;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import org.apache.cordova.*;
@@ -25,6 +27,7 @@ import jk.cordova.plugin.kiosk.KioskActivity;
 import org.json.JSONObject;
 import java.lang.Integer;
 import java.util.HashSet;
+import java.util.List;
 
 public class KioskPlugin extends CordovaPlugin {
     
@@ -175,8 +178,8 @@ public class KioskPlugin extends CordovaPlugin {
                 return true;
                 
             } else if (SET_ALLOWED_KEYS.equals(action)) {
-                
-                System.out.println("setAllowedKeys: " + args.toString());
+
+//                System.out.println("setAllowedKeys: " + args.toString());
                 HashSet<Integer> allowedKeys = new HashSet<Integer>();
                 for (int i = 0; i < args.length(); i++) {
                     allowedKeys.add(args.optInt(i));
@@ -194,12 +197,15 @@ public class KioskPlugin extends CordovaPlugin {
             return false;
         }
     }
-    
+
     private String findLauncherPackageName() {
         final Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         final ResolveInfo res = this.cordova.getActivity().getPackageManager().resolveActivity(intent, 0);
+        if (res!=null) {
         return res.activityInfo.packageName;
     }
+        return null;
+      }
 }
 

@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import org.apache.cordova.*;
 import android.widget.*;
@@ -23,6 +24,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.getcapacitor.BridgeActivity;
+import com.getcapacitor.Logger;
 
 
 public class KioskActivity extends BridgeActivity {
@@ -33,6 +35,17 @@ public class KioskActivity extends BridgeActivity {
     public static volatile Set<Integer> allowedKeys = Collections.EMPTY_SET;
 
     private StatusBarOverlay statusBarOverlay = null;
+
+  private boolean isInKioskMode() {
+    ActivityManager activityManager = (ActivityManager) this.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+    if (Build.VERSION.SDK_INT < 23) {
+      return activityManager.isInLockTaskMode();
+    } else {
+//      Logger.i(TAG, "Task Mode: " + Integer.toString(activityManager.getLockTaskModeState()));
+      return activityManager.getLockTaskModeState() > ActivityManager.LOCK_TASK_MODE_NONE;
+    }
+  }
+
 
     public void enterKioskMode(Boolean flagOnly){
 
@@ -64,12 +77,16 @@ public class KioskActivity extends BridgeActivity {
         androidx.appcompat.app.ActionBar _actionBar = getSupportActionBar();
 
 
-        System.out.println("getActionBar:2:**********");
-
-        System.out.println(String.valueOf(_actionBar));
+//        System.out.println("getActionBar:2:**********");
+//
+//        System.out.println(String.valueOf(_actionBar));
 
         if (_actionBar != null) {
           _actionBar.hide();
+        }
+
+        if (!isInKioskMode()){
+          this.startLockTask();
         }
 
           }
@@ -97,12 +114,12 @@ public class KioskActivity extends BridgeActivity {
   /*
    * This is based on the link below,
    *   https://stackoverflow.com/questions/27991656/how-to-set-default-app-launcher-programmatically
-   * 
+   *
    * The basic idea is to create a fake component and declare it as disabled, and then enable it to force the system to show the launcher selector screen even if the user already made a previous selection,
-   * because the default launch list has been changed. 
-   * 
-   * We made two important tweets as documented in the code below. 
-   * 
+   * because the default launch list has been changed.
+   *
+   * We made two important tweets as documented in the code below.
+   *
    * @tanli 9/5/23
    */
   public void selectLauncher() {
@@ -166,12 +183,16 @@ public class KioskActivity extends BridgeActivity {
       androidx.appcompat.app.ActionBar _actionBar = getSupportActionBar();
 
 
-      System.out.println("getActionBar:2:**********");
-
-      System.out.println(String.valueOf(_actionBar));
+//      System.out.println("getActionBar:2:**********");
+//
+//      System.out.println(String.valueOf(_actionBar));
 
       if (_actionBar != null) {
         _actionBar.show();
+      }
+
+      if (this.isInKioskMode()){
+        this.stopLockTask();
       }
     }
       );
@@ -181,14 +202,14 @@ public class KioskActivity extends BridgeActivity {
     @Override
     public void onStart() {
         super.onStart();
-        System.out.println("KioskActivity started");
+        Logger.info("KioskActivity started");
         running = this;
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        System.out.println("KioskActivity stopped");
+        Logger.info("KioskActivity stopped");
         running = null;
     }
 
@@ -200,7 +221,7 @@ public class KioskActivity extends BridgeActivity {
         if (running!=null) {
             finish(); // prevent more instances of kiosk activity
         }
-        
+
         // loadUrl(launchUrl);
 
 //        // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
@@ -246,7 +267,7 @@ public class KioskActivity extends BridgeActivity {
     @Override
     public void onPause() {
             super.onPause();
-            this._moveTaskToFront();
+            this.moveTaskToFront();
 //            if (kioskMode) {
 //              ActivityManager activityManager = (ActivityManager) getApplicationContext()
 //                .getSystemService(Context.ACTIVITY_SERVICE);
@@ -262,24 +283,23 @@ public class KioskActivity extends BridgeActivity {
 
     @Override
     public void finish() {
-        System.out.println("Never finish...");
+        Logger.info("Never finish...");
         // super.finish();
     }
 
-    private void _moveTaskToFront() {
-      System.out.println("**********move task to front *********");
+    private void moveTaskToFront() {
+      Logger.info("**********move task to front *********");
       if (kioskMode) {
-        System.out.println("move:check:1");
+//        System.out.println("move:check:1");
 
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 //              am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
-        System.out.println("move:check:2");
+//        System.out.println("move:check:2");
+//        System.out.println(getTaskId());
 
         am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
-        System.out.println("move:check:3");
 
       }
-      System.out.println("******* end moving task *********");
     }
 
     // http://www.andreas-schrade.de/2015/02/16/android-tutorial-how-to-create-a-kiosk-mode-in-android/
@@ -293,7 +313,7 @@ public class KioskActivity extends BridgeActivity {
             Intent closeDialog = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
             sendBroadcast(closeDialog);
             */
-            this._moveTaskToFront();
+            this.moveTaskToFront();
 //            if (kioskMode) {
 //              ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 ////              am.moveTaskToFront(getTaskId(), ActivityManager.MOVE_TASK_WITH_HOME);
