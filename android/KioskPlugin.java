@@ -19,6 +19,8 @@ import android.view.ViewGroup.LayoutParams;
 import com.getcapacitor.Logger;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.json.JSONArray;
@@ -28,12 +30,17 @@ import org.json.JSONObject;
 import java.lang.Integer;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class KioskPlugin extends CordovaPlugin {
     
     public static final String EXIT_KIOSK = "exitKiosk";
     public static final String IS_IN_KIOSK = "isInKiosk";
     public static final String IS_SET_AS_LAUNCHER = "isSetAsLauncher";
+  public static final String GET_LAUNCHER = "getLauncher";
+
+  public static final String LIST_LAUNCHER = "listHomeApps";
+
     public static final String SET_ALLOWED_KEYS = "setAllowedKeys";
 
     public static final String ENTER_KIOSK = "enterKiosk";
@@ -90,8 +97,19 @@ public class KioskPlugin extends CordovaPlugin {
                 callbackContext.success(Boolean.toString(myPackage.equals(findLauncherPackageName())));
                 return true;
 
+      } else if (GET_LAUNCHER.equals(action)) {
+        callbackContext.success(findLauncherPackageName());
+        return true;
+      } else if (LIST_LAUNCHER.equals(action)) {
+        JSONArray _jsonArray = new JSONArray();
+        List<String> _apps = this.findLauncherPackageNames();
+        for (String _app: _apps){
+          _jsonArray.put(_app);
             }
-            else if (IS_DEVICE_SECURE.equals(action)) {
+        callbackContext.success(_jsonArray);
+        return true;
+
+      } else if (IS_DEVICE_SECURE.equals(action)) {
 
               Context context = cordova.getActivity().getApplicationContext();
 
@@ -207,5 +225,23 @@ public class KioskPlugin extends CordovaPlugin {
     }
         return null;
       }
+      
+        private List<String> findLauncherPackageNames() {
+    final Intent intent = new Intent(Intent.ACTION_MAIN);
+//    intent.addCategory(Intent.CATEGORY_LAUNCHER);
+    intent.addCategory(Intent.CATEGORY_HOME);
+    intent.addCategory(Intent.CATEGORY_DEFAULT);
+
+    final ResolveInfo res = this.cordova.getActivity().getPackageManager().resolveActivity(intent, 0);
+
+    final List<ResolveInfo> _resList = this.cordova.getActivity().getPackageManager().queryIntentActivities(intent, 0);
+
+    List<String> resultList = new ArrayList<String>();
+    for (ResolveInfo _info: _resList){
+      resultList.add(_info.activityInfo.packageName);
+    }
+    return resultList;
+  }
+
 }
 

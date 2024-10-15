@@ -116,6 +116,38 @@ var KioskPlugin = {
         }, "KioskPlugin", "isSetAsLauncher", []);
     },
 
+    getLauncher: function (callback, hasError) {
+        if(/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
+            callback(false); // ios not supported - cannot be in kiosk
+            return;
+        }
+        exec(function (out) {
+            callback(out);
+        }, function (error) {
+            alert("KioskPlugin.getLauncher failed: " + error);
+            if (hasError){
+                hasError(error)
+            }
+
+        }, "KioskPlugin", "getLauncher", []);
+    },
+
+    listHomeApps: function (callback, hasError) {
+        if(/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
+            callback(false); // ios not supported - cannot be in kiosk
+            return;
+        }
+        exec(function (out) {
+            callback(out);
+        }, function (error) {
+            alert("KioskPlugin.listHomeApps failed: " + error);
+            if (hasError){
+                hasError(error)
+            }
+
+        }, "KioskPlugin", "listHomeApps", []);
+    },
+
     isDeviceSecure: function (callback, hasError) {
         if(/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
             callback(false); // ios not supported - cannot be in kiosk

@@ -85,9 +85,9 @@ public class KioskActivity extends BridgeActivity {
           _actionBar.hide();
         }
 
-        if (!isInKioskMode()){
-          this.startLockTask();
-        }
+//        if (!isInKioskMode()){
+//          this.startLockTask();
+//        }
 
           }
         );
@@ -191,9 +191,9 @@ public class KioskActivity extends BridgeActivity {
         _actionBar.show();
       }
 
-      if (this.isInKioskMode()){
-        this.stopLockTask();
-      }
+//      if (this.isInKioskMode()){
+//        this.stopLockTask();
+//      }
     }
       );
 
