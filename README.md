@@ -43,8 +43,17 @@ Add the following to your app's manifest
 
 ```xml
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.stripe.example.app">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permission is required to identify the current home app -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.HOME" />
+        </intent>
+    </queries>
+
+
       <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
         android:name="jk.cordova.plugin.kiosk.KioskActivity"
@@ -69,6 +78,7 @@ Add the following to your app's manifest
 </manifest>
 ```
 
+Please pay special attention to add "android.permission.QUERY_ALL_PACKAGES", which is required to identify correctly which package is the default launch (a.k.a. Home App).
 
 To has it working, user have to **set this application as launcher** (see below) and start it by pressing Home button or by restarting the device.
 

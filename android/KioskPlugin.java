@@ -3,6 +3,7 @@ package jk.cordova.plugin.kiosk;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.KeyguardManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -219,9 +220,11 @@ public class KioskPlugin extends CordovaPlugin {
     private String findLauncherPackageName() {
         final Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
-        final ResolveInfo res = this.cordova.getActivity().getPackageManager().resolveActivity(intent, 0);
-        if (res!=null) {
-        return res.activityInfo.packageName;
+        final ResolveInfo res = this.cordova.getActivity().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        if (res!=null && res.activityInfo!=null) {
+//          return res.activityInfo.packageName;
+          ComponentName componentName = new ComponentName(res.activityInfo.packageName, res.activityInfo.name);
+          return componentName.getPackageName();
     }
         return null;
       }
@@ -232,9 +235,9 @@ public class KioskPlugin extends CordovaPlugin {
     intent.addCategory(Intent.CATEGORY_HOME);
     intent.addCategory(Intent.CATEGORY_DEFAULT);
 
-    final ResolveInfo res = this.cordova.getActivity().getPackageManager().resolveActivity(intent, 0);
+//    final ResolveInfo res = this.cordova.getActivity().getPackageManager().resolveActivity(intent, PackageManager.MATCH_ALL);
 
-    final List<ResolveInfo> _resList = this.cordova.getActivity().getPackageManager().queryIntentActivities(intent, 0);
+    final List<ResolveInfo> _resList = this.cordova.getActivity().getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_ALL);
 
     List<String> resultList = new ArrayList<String>();
     for (ResolveInfo _info: _resList){
